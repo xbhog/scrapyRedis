@@ -14,5 +14,4 @@ class SunproSpider(scrapy.Spider):
             status= li.xpath("./span[2]/text()").extract_first().split('\n                        ')[1]
 
             item['status'] = status.split("\n                    ")[0]
-            # print(item)
             yield item
