@@ -51,8 +51,8 @@ class SeleniumDownloaderMiddleware:
         ActionChains(driver).move_to_element(search_button).click(search_button).perform()
         time.sleep(1)
         body_btn = driver.find_element_by_class_name("body-btn").click()
-        # 以上方式解决拉钩网站出现的额弹窗问题，纯selenium
-        # 下面获取网页源码推出selenium并且返回response到lagoupro
+        # 以上方式解决拉钩网站出现的弹窗问题，纯selenium
+        # 下面获取网页源码退出selenium并且返回response到lagoupro
         html = driver.page_source
         time.sleep(5)
         driver.quit()
