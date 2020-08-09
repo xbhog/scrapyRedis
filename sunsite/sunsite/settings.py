@@ -20,7 +20,8 @@ ITEM_PIPELINES = {
     'scrapy_redis.pipelines.RedisPipeline': 400,
 }
 # 设置redis数据库
-REDIS_URL = "redis://127.0.0.1:6379"
+# REDIS_URL = "redis://127.0.0.1:6379"
+REDIS_URL = "redis://192.168.75.135:8888"
 
 # LOG_LEVEL = 'DEBUG'
 

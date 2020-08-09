@@ -1,30 +1,19 @@
 # -*- coding: utf-8 -*-
-#该spider在基础spider上进行分布式修改
+#该spider为Scrapy的基础代码
 import scrapy
-from JDspider.items import JdspiderItem
+from JDscrapy.JDspider import JdspiderItem
 import json
-#-----1导入分布式爬虫类
-from scrapy_redis.spiders import RedisSpider
 
-class JdproSpider(RedisSpider): #----2继承RedisSpider类方法
+class JdproSpider(scrapy.Spider):
     name = 'JDpro'
-    # start_urls = ['https://book.jd.com/booksort.html']
-    # ----4 设置redis-key
-    redis_key = 'tranurl'
-
-    # ----5 设置__init__
-    def __init__(self, *args, **kwargs):
-        domain = kwargs.pop('domain', '')
-        self.allowed_domains = list(filter(None, domain.split(',')))
-        super(JdproSpider, self).__init__(*args, **kwargs)
+    start_urls = ['https://book.jd.com/booksort.html']
 
     def parse(self, response):
         #获取图书大分类中的列表
         big_node_list = response.xpath("//div[@class='mc']//dt/a")
 
         # 【：1】切片，先获取一类数据测试
-        # for big_node in big_node_list[:1]:
-        for big_node in big_node_list:
+        for big_node in big_node_list[:1]:
             #大分类的名称
             big_category = big_node.xpath("./text()").extract_first()
             #大分类的URL
@@ -83,7 +72,7 @@ class JdproSpider(RedisSpider): #----2继承RedisSpider类方法
 
             yield scrapy.Request(url=pri_url, callback=self.parse_price, meta={'meta_1': item})
             #拿到一条数据测试，可以开启
-            # break
+            break
     def parse_price(self,response):
         #拿到传递过来的item
         item = response.meta['meta_1']
